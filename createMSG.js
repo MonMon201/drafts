@@ -12,6 +12,7 @@ client.on('message', message => {
         const channel = client.channels.cache.get(channelID);
         channel.send("pong");
     }
+    // console.log(message.author.username);
 });
 
 client.login(process.env.TOKEN);
