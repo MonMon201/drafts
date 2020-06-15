@@ -5,11 +5,12 @@ const messageWrap = {
         collectorFlag : false,
     },
     collectedMessages : [],
+    client: null,
     message : null,
 };
 
 const {pingPong} = require("./function/pingPong.js");
-const {startCollect, stopCollect} = require("./function/collector.js");
+const {startCollect, stopCollect, showCollected} = require("./function/collector.js");
 
 const collecterDistributor = messageWrap => {
     const content = messageWrap.message.content;
@@ -23,6 +24,7 @@ const defaultDistributor = messageWrap => {
     return (({
         'ping': pingPong,
         '/startCollect' : startCollect,
+        '/showCollected' : showCollected,
     }[content] || (() => console.log('no such command: ' + content)))(messageWrap));
 };
 
@@ -36,9 +38,10 @@ const flagCheck = messageWrap => {
     return defaultDistributor(messageWrap);
 }
 
-const wrapper = message => {
+const wrapper = (message, client) => {
     console.log(message.content);
     messageWrap.message = message;
+    messageWrap.client = client;
     flagCheck(messageWrap); 
 }
 
