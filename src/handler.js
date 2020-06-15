@@ -1,7 +1,7 @@
 'use strict'
 
-const {log} = require("./function/collector.js"); 
+const {pingPong} = require("./function/pingPong.js"); 
 
 module.exports = {
-    handleMessage,
+    pingPong,
 };

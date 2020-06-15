@@ -6,9 +6,9 @@ require('dotenv').config()
 const handler = require("./src/handler.js");
 
 const client = new Discord.Client();
- 
+
 client.on('message', message => {
-    handler.log(message);
+    handler.pingPong(message);
 });
 
 client.login(process.env.TOKEN);
