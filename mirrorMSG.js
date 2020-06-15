@@ -6,11 +6,11 @@ require('dotenv').config()
 const client = new Discord.Client();
  
 client.on('message', message => {
-    if(message.content === "ping"){
-        console.log(message);
-        // const channelID = message.channel.id;
-        // const channel = client.channels.cache.get(channelID);
-        // channel.send("pong");
+    if(message.author.username !== "Danias-Test-Bot"){
+        // console.log(message);
+        const channelID = message.channel.id;
+        const channel = client.channels.cache.get(channelID);
+        channel.send(message.content);
     }
 });
 
