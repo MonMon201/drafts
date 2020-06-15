@@ -17,9 +17,19 @@ const defaultDistributor = messageWrap => {
     }[content] || (() => console.log('no such command: ' + content)))(messageWrap));
 };
 
+const flagCheck = messageWrap => {
+    for(let key in messageWrap.flagsCollection){
+        if(messageWrap.flagsCollection[key]){
+            console.log('true in ' + key);
+            return;
+        }
+    }
+    return defaultDistributor(messageWrap);
+}
+
 const wrapper = message => {
     messageWrap.message = message;
-    defaultDistributor(messageWrap); 
+    flagCheck(messageWrap); 
 }
 
 module.exports = {
