@@ -8,13 +8,13 @@ const stopCollect = (messageWrap) => {
 
 const showCollected = (messageWrap) => {
     const channelID = messageWrap.message.channel.id;
-    const channel = messageWrap.client.channels.cache.get(channelID);
-    if(messageWrap.collectedMessages.length){
-        for(let i = 0; i < messageWrap.collectedMessages.length; i++){
-            const content = messageWrap.collectedMessages[i].content;
-            channel.send(content);
+	const channel = messageWrap.client.channels.cache.get(channelID);
+	const collectedMessages = messageWrap.collectedMessages.toArray()
+	console.log(collectedMessages)
+    for(let i = 0; i < collectedMessages.length; i++){
+        const content = collectedMessages[i].content;
+        channel.send(content);
         }
-        messageWrap.collectedMessages = [];
     }
     else{
         channel.send('There is nothing collected!');

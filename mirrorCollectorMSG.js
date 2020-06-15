@@ -1,9 +1,7 @@
 'use strict';
-
+require('dotenv').config();
 const Discord = require('discord.js');
-require('dotenv').config()
-
-const handler = require("./src/handler.js");
+const handler = require('./src/handler.js');
 
 const client = new Discord.Client();
 
