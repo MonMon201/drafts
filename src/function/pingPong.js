@@ -1,7 +1,7 @@
 'use strict'
 
-const pingPong = () => {
-    console.log('pong');
+const pingPong = (message) => {
+    console.log(message.content + ' pong');
 };
 
 module.exports = {
