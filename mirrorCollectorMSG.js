@@ -8,7 +8,7 @@ const handler = require("./src/handler.js");
 const client = new Discord.Client();
 
 client.on('message', message => {
-    handler.defaultDistributor(message);
+    handler.wrapper(message);
 });
 
 client.login(process.env.TOKEN);
