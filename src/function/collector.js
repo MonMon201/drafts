@@ -14,10 +14,6 @@ const showCollected = (messageWrap) => {
     for(let i = 0; i < collectedMessages.length; i++){
         const content = collectedMessages[i].content;
         channel.send(content);
-        }
-    }
-    else{
-        channel.send('There is nothing collected!');
     }
 };
 
