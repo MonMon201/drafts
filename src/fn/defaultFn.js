@@ -9,14 +9,14 @@ const collect = (wrappedMessage) => {
 };
 
 const markCollected = (wrappedMessage) => {
-    if(wrappedMessage.mark !== 0){
+    if(wrappedMessage.storedMessages.length !== 0){
         if(wrappedMessage.message.author.username === 'Danias-Test-Bot'){
             wrappedMessage.message.react('👍');
-            wrappedMessage.mark--;
+            wrappedMessage.storedMessages.pop();
+            if(wrappedMessage.storedMessages.length === 0){
+                wrappedMessage.storedFlags.marker = false;
+            }
         }
-    }
-    else{
-        wrappedMessage.storedFlags.marker = false;
     }
 }
 

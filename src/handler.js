@@ -20,7 +20,6 @@ const handler = Handler.create(defaultDistrubutor)
   .add('collector', collectorDistributor)
   .add('marker', markerDistributor);
 
-
 const wrap = {
     storedFlags : {
       collector : false,
