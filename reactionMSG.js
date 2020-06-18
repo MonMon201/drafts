@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+const reactionMSG = require('./src/reactionMSG');
 require('dotenv').config()
+const {createReactionMSG} = require('./src/createMSG.js');
 
 const client = new Discord.Client();
  
