@@ -1,21 +1,23 @@
 const startCollect = (messageWrap) => {
-    messageWrap.flagsCollection.collectorFlag = true;
+    messageWrap.storedFlags.collector = true;
 };
 
 const stopCollect = (messageWrap) => {
-    messageWrap.flagsCollection.collectorFlag = false;
+    messageWrap.storedFlags.collector = false;
 };
 
-const showCollected = (messageWrap) => {
-    const channelID = messageWrap.message.channel.id;
-	const channel = messageWrap.client.channels.cache.get(channelID);
-	const collectedMessages = messageWrap.collectedMessages.toArray()
-	console.log(collectedMessages)
-    for(let i = 0; i < collectedMessages.length; i++){
-        const content = collectedMessages[i].content;
+const showCollected = (wrappedMessage) => {
+    wrappedMessage.storedFlags.marker = true;
+    wrappedMessage.mark = wrappedMessage.storedMessages.length;
+    const channelID = wrappedMessage.message.channel.id;
+	const channel = wrappedMessage.client.channels.cache.get(channelID);
+    const storedMessages = wrappedMessage.storedMessages;
+    for(let i = 0; i < storedMessages.length; i++){
+        const content = storedMessages[i].content;
         channel.send(content);
     }
 };
+
 
 module.exports = {
     startCollect,

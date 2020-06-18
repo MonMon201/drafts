@@ -3,27 +3,45 @@
 const { pong } = require('./fn/pong.js');
 const { Distributor } = require('./class/distributor.js');
 const { Handler } = require('./class/handler.js');
+const { startCollect, stopCollect, showCollected } = require('./fn/collector.js');
+const { markCollected } = require('./fn/marker.js');
+const collector = require('./fn/collector.js');
 
 const defaultFn = (wrappedMessage) => {
   console.log('no such command: ' + wrappedMessage.message.content);
 }
 
+const collect = (wrappedMessage) => {
+  wrappedMessage.storedMessages.push(wrappedMessage.message);
+}
+
 const defaultDistrubutor = Distributor.create(defaultFn)
-  .add('ping', pong);
+  .add('start', startCollect)
+  .add('ping', pong)
+  .add('show', showCollected);
 
-const handler = Handler.create(defaultDistrubutor);
+const collectorDistributor = Distributor.create(collect)
+  .add('stop', stopCollect);
 
-const wrapper = (message) => {
-  const wrap = {
+const markerDistributor = Distributor.create(markCollected);
+
+const handler = Handler.create(defaultDistrubutor)
+  .add('collector', collectorDistributor)
+  .add('marker', markerDistributor);
+
+
+const wrap = {
     storedFlags : {
-
+      collector : false,
+      marker : false,
     },
-    message : message,
-  }
-  return wrap;
+    storedMessages : [],
+    mark : 0,
+    message : null,
+    client : null,
 }
 
 module.exports = {
-  wrapper,
+  wrap,
   handler,
 }

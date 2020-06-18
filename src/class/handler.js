@@ -18,14 +18,16 @@ class Handler{
     controller(wrappedMessage){
         const content = wrappedMessage.message.content;
         for(let key in wrappedMessage.storedFlags){
-            if(wrappedMessage.storedFlags[key]) // if some flag is up this will happen
-                
+            // console.log('pong!');
+            if(wrappedMessage.storedFlags[key]){ // if some flag is up this will happen
+                // console.log('pong!');
                 for(let i = 0; i < this.distributors.length; i++){
+                    console.log(key)
                     if(this.distributors[i].key===key){
                         return this.distributors[i].value.controller(wrappedMessage);
                     }
                 }
-
+            }
         }
         return this.defaultDistrubutor.controller(wrappedMessage);
     }
