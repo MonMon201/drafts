@@ -4,16 +4,7 @@ const { pong } = require('./fn/pong.js');
 const { Distributor } = require('./class/distributor.js');
 const { Handler } = require('./class/handler.js');
 const { startCollect, stopCollect, showCollected } = require('./fn/collector.js');
-const { markCollected } = require('./fn/marker.js');
-const collector = require('./fn/collector.js');
-
-const defaultFn = (wrappedMessage) => {
-  console.log('no such command: ' + wrappedMessage.message.content);
-}
-
-const collect = (wrappedMessage) => {
-  wrappedMessage.storedMessages.push(wrappedMessage.message);
-}
+const { defaultFn, collect, markCollected } = require('./fn/defaultFn.js')
 
 const defaultDistrubutor = Distributor.create(defaultFn)
   .add('start', startCollect)

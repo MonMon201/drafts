@@ -1,5 +1,13 @@
 'use strict';
 
+const defaultFn = (wrappedMessage) => {
+    console.log('no such command: ' + wrappedMessage.message.content);
+};
+
+const collect = (wrappedMessage) => {
+    wrappedMessage.storedMessages.push(wrappedMessage.message);
+};
+
 const markCollected = (wrappedMessage) => {
     if(wrappedMessage.mark !== 0){
         if(wrappedMessage.message.author.username === 'Danias-Test-Bot'){
@@ -13,5 +21,7 @@ const markCollected = (wrappedMessage) => {
 }
 
 module.exports = {
+    defaultFn,
+    collect,
     markCollected,
-};
+}
