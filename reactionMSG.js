@@ -1,13 +1,14 @@
 'use strict';
 
 const Discord = require('discord.js');
+const { handler, wrapper } = require('./src/handler.js');
 require('dotenv').config()
-const {createReactionMSG} = require('./src/createMSG.js');
+
 
 const client = new Discord.Client();
  
 client.on('message', message => {
-    createReactionMSG(message);
+    handler.controller(wrapper(message));
 });
 
 client.login(process.env.TOKEN);

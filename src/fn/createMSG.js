@@ -1,6 +1,7 @@
 'use strict'
 
-const createReactionMessage = (message) => {
+const createReactionMessage = (wrappedMessage) => {
+    const message = wrappedMessage.message;
     if(message.author.username !== 'Danias-Test-Bot'){
         if(message.content === 'ping'){
             console.log(message.content);
