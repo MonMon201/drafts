@@ -27,8 +27,11 @@ client.on('message', message => {
 
 client.on('messageReactionAdd', (messageReaction, user) => {
     // console.log('reaction!');
-    console.log(messageReaction._emoji.name);
-    console.log(user.tag);
+    console.log(messageReaction.message);
+    // console.log(user.tag);
+    collector.on('collect', () => {
+        console.log('reaction!');
+    });
 });
 
 client.login(process.env.TOKEN);
