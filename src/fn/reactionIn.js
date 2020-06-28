@@ -1,5 +1,3 @@
-const { MessageReaction } = require("discord.js");
-
 'use strict';
 const incomingReaction = (messageReaction, user) => {
     console.log('incoming reaction!' + 

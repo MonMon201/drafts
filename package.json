@@ -1,0 +1,18 @@
+{
+  "name": "drafts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MonMon201/drafts/",
+  "author": "Eugene Lepeico <eugenelepeico@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-metarhia": "^7.0.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-config-prettier": "^6.11.0"
+  }
+}

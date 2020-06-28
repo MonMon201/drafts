@@ -1,11 +1,11 @@
 'use strict';
 
-const { incomingReaction } = require("./fn/reactionIn.js");
-const { outgoingReaction } = require("./fn/reactionOut.js");
-const { Poll } = require("./class/messageStorage.js");
+
+
+const handler = (message, client) => {
+    // channelDistributor.controller(message, client);
+}
 
 module.exports = {
-    incomingReaction,
-    outgoingReaction,
-    Poll,
-};
+    handler,
+}

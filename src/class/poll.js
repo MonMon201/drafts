@@ -1,12 +1,12 @@
 'use strict';
 
 class Poll {
-    constructor(){
+    constructor(name){
+        this.name = name;
         this.messages = [];
     }
 
     addReaction(messageReaction, user){
-
 
         for(let i = 0; i < this.messages.length; i++){
             const emoji = messageReaction._emoji.name;
@@ -17,20 +17,25 @@ class Poll {
             if(this.messages[i].emoji === emoji){
                 // Check if emoji is correct
                 console.log(
-                        '______________________' +
-                        '\nuser storage state on: ' +  
-                        '\n message: ' + messageReaction.message.content +
-                        '\n user: ' + tag +
-                        '\n message container: ' + this.messages[i].messageId +
-                        '\n state: ' + this.messages[i].userStorage
-                        );
+                    '______________________' +
+                    '\nuser storage state on: ' +  
+                    '\n message: ' + messageReaction.message.content +
+                    '\n user: ' + tag +
+                    '\n message container: ' + this.messages[i].messageId +
+                    '\n state: ' + this.messages[i].userStorage
+                );
 
-                const idx = this.isThereTag(tag);
+                let idx = false;
 
-                if(idx === false){
+                for(let j = 0; j < this.messages.length; j++){
+                    if(!this.messages[j].userStorage.indexOf(tag)){
+                        idx = true;
+                    }
+                }
+
+                if(!idx){
                     
                     // Check if there is a user in storage
-                    // Typecheck used to avoid 0 interpritating as false
 
                     if(this.messages[i].messageId === messageId){
                         // Check if this message is handled
@@ -58,10 +63,17 @@ class Poll {
                 // Check if emoji is correct
                 if(this.messages[i].messageId === messageId){
                     // Check if this message is 
-                    
-                    const idx = this.isThereTag(tag);
 
-                        if(idx !== false){
+                    let idx = false;
+
+                    for(let j = 0; j < this.messages.length; j++){
+                        if(!this.messages[j].userStorage.indexOf(tag)){
+                            idx = true;
+                        }
+                    }
+                    
+
+                        if(idx){
                             this.messages[idx].userStorage.splice(idx, 1);
                             console.log(
                             '\n________________________' +
@@ -77,25 +89,24 @@ class Poll {
 
     }
 
-    addMessage(message, emoji){
+    // addMessage(message, emoji){
 
-        const messageId = message.id;
+    //     const messageId = message.id;
 
-        this.messages.push({messageId : messageId, emoji : emoji, userStorage : []});
+    //     this.messages.push({messageId : messageId, emoji : emoji, userStorage : []});
     
-    }
+    // }
 
-    isThereTag(tag){
-        for(let i = 0; i < this.messages.length; i++){
-            if(!this.messages[i].userStorage.indexOf(tag)){
-                return i;
-            }
-        }
-        return false;
+    addMessage(message){
+        this.messages.push(message);
     }
 
     getMessages(){
         return this.messages;
+    }
+
+    getName(){
+        return this.name;
     }
 
 }
