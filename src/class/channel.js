@@ -55,6 +55,10 @@ class Channel{
         return this.polls[this.polls.length - 1];
     }
 
+    getPolls(){
+        return this.polls;
+    }
+
     getId(){
         return this.lastMessage.channel.id;
     }

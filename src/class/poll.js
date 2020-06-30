@@ -4,6 +4,7 @@ class Poll {
     constructor(name){
         this.name = name;
         this.messages = [];
+        this.userMessages = [];
     }
 
     addReaction(messageReaction, user){
@@ -99,6 +100,18 @@ class Poll {
 
     getMessages(){
         return this.messages;
+    }
+
+    addUserMessage(message){
+
+        this.userMessages.push(message);
+    
+    }
+
+    getUserMessages(){
+
+        return this.userMessages;
+
     }
 
     emptyMessages(){

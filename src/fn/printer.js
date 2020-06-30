@@ -6,17 +6,19 @@ const printer = async channel => {
 
     if(message.author.username === 'Danias-Test-Bot'){
 
-        const messages = channel.getCurrentPoll().getMessages();
-        
-        if(messages.length === 0){
+        const userMessages = channel.getCurrentPoll().getUserMessages();
+        // console.log(userMessages);
+        if(userMessages.length === 0){
             channel.getMessage().react('➕');
             channel.setFlag('emojiFlag', false);
+            channel.getCurrentPoll().addMessage(message, '➕');
+            // console.log(channel.getCurrentPoll().getMessages());
             return;
         }
     
         const dest = channel.getClient().channels.cache.get(channel.getId());
     
-        await dest.send(messages.shift().message);
+        await dest.send(userMessages.shift());
     
         await channel.getMessage().react('➕');
         

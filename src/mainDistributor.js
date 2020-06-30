@@ -14,7 +14,7 @@ const emojiDistributor = Distributor.create(printer);
 
 const collectorDistributor = Distributor.create(
     (channel) => {
-        channel.getCurrentPoll().addMessage(channel.getMessage().content, '➕');
+        channel.getCurrentPoll().addUserMessage(channel.getMessage().content);
         console.log('message has been collected!');
     })
     .add('endNewPoll', stopCollect);
