@@ -8,6 +8,7 @@ const { writeCheckStorage } = require('./fn/checkStorageWrite.js');
 const { readCheckStorage } = require('./fn/checkStorageRead.js');
 const { startCollect, stopCollect, showCollected } = require('./fn/collector.js');
 const { printer } = require('./fn/printer.js');
+const { amazing } = require('./fn/thisIsAmazing.js');
 
 const emojiDistributor = Distributor.create(printer);
 
@@ -16,7 +17,7 @@ const collectorDistributor = Distributor.create(
         channel.getCurrentPoll().addMessage(channel.getMessage().content, '➕');
         console.log('message has been collected!');
     })
-    .add('stop', stopCollect);
+    .add('endNewPoll', stopCollect);
 
 const defaultDistributor = Distributor.create((channel) => {
     const content = 'wrong command';
@@ -28,8 +29,9 @@ const defaultDistributor = Distributor.create((channel) => {
     .add('ping', pingPong)
     .add('write', writeCheckStorage)
     .add('read', readCheckStorage)
-    .add('start', startCollect)
-    .add('show', showCollected);
+    .add('startNewPoll', startCollect)
+    .add('showNewPoll', showCollected)
+    .add('this_is_amazing!', amazing);
 
 const mainDistributor = MainDistributor.create(defaultDistributor)
     .add('collectorFlag', collectorDistributor)

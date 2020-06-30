@@ -15,9 +15,9 @@ class Distributor{
     }
   
     controller(channel){
-        const message = channel.getMessage();
+        const request = channel.getRequest();
         for(let i = 0; i < this.storedFn.length; i++){
-            if(this.storedFn[i].key === message.content){
+            if(this.storedFn[i].key === request.command){
                 return this.storedFn[i].value(channel);
             }
         }

@@ -2,8 +2,9 @@
 
 const writeCheckStorage = (channel) => {
     const message = channel.getMessage();
-    channel.setCheckStorage(message.content);
-    message.reply('check storage is set successfully!');
+    const request = channel.getRequest();
+    channel.setCheckStorage(request.args[0]);
+    message.reply('checkstorage is set successfully!');
 };
 
 module.exports = {

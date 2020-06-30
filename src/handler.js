@@ -3,8 +3,17 @@
 const { Channel } = require("./class/channel");
 const channelDistributor = require("./class/channelDistributor");
 
-const handler = (client, message) => {
-    const channel = Channel.create(client, message);
+const handler = async (client, message) => {
+    await client;
+    await message;
+    let idx = false;
+    let channel;
+    if(!idx){
+        channel = Channel.create(client, message);
+        idx = true;
+    } else{
+        channel.setMessage(message);
+    }
     console.log(channel);
     // // channelDistributor.controller(message, client);
     // let msg = message.content;

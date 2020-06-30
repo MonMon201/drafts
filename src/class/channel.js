@@ -3,12 +3,12 @@
 const { Poll } = require("./poll");
 
 class Channel{
-    constructor(client, lastMessage){
+    constructor(client, lastMessage, request){
         this.client = client;
         this.lastMessage = lastMessage;
         this.request = {
-            command : null,
-            args : [],
+            command : request.command,
+            args : request.args,
         };
         this.storedFlags = [];
         this.polls = [];
@@ -17,14 +17,18 @@ class Channel{
 
     static create(client, lastMessage){
         let msg = lastMessage.content.split(' ');
-        const args = [];
+        const request = {
+            command : null,
+            args : [],
+        }
         if(msg[0] === 'Polly'){
-            const command = msg[1];
+            request.command = msg[1];
             for(let i = 2; i < msg.length; i++){
-                args.push(msg[i]);
+                request.args.push(msg[i]);
             }
         }
-        return new Channel(client, lastMessage);
+
+        return new Channel(client, lastMessage, request);
     }
 
     addFlag(key, value){   //key is a flag name, value is a state of the flag
@@ -57,6 +61,22 @@ class Channel{
 
     setMessage(message){
         this.lastMessage = message;
+        let unWorkedRequest = message.content.split(' ');
+        this.request = {
+            command : null,
+            args : [],
+        }
+        // Check if someone is asking Polly about something
+        if(unWorkedRequest[0] === 'Polly'){
+            this.request.command = unWorkedRequest[1];
+            for(let i = 2; i < unWorkedRequest.length; i++){
+                this.request.args.push(unWorkedRequest[i]);
+            }
+        }
+    }
+
+    getRequest(){
+        return this.request;
     }
 
     getMessage(){

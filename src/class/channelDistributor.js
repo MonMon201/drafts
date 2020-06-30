@@ -31,7 +31,7 @@ class ChannelDistributor{
     }
 
     addChannel(message){
-        const channel = new Channel(this.client, message);
+        const channel = Channel.create(this.client, message);
         const flags = this.mainDistributor.getDistributorsFlags();
         for(let i = 0; i < flags.length; i++){  //setting all distributor flags to the channel
             channel.addFlag(flags[i], false);

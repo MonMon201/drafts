@@ -3,9 +3,14 @@
 const { Poll } = require('../class/poll');
 
 const startCollect = (channel) => {
-    const poll = new Poll(channel.getMessage().content);
-    channel.addPoll(poll);
-    channel.setFlag('collectorFlag', true);
+    const argument = channel.getRequest().args[0];
+    if(argument){
+        const poll = new Poll(argument);
+        channel.addPoll(poll);
+        channel.setFlag('collectorFlag', true);
+    } else{ //not sure about that. I maybe I would like to have unnamed polls
+        channel.getMessage().reply('name can\'t be empty!');
+    }
     // console.log(channel.getFlags());
     // console.log('collector flag is set up!');
     // console.log(channel.getCurrentPoll());
@@ -18,11 +23,13 @@ const stopCollect = (channel) => {
 
 const showCollected = (channel) => {
     
+    const name = channel.getCurrentPoll().getName();
+
     channel.setFlag('emojiFlag', true);
 
     const dest = channel.getClient().channels.cache.get(channel.getId());
 
-    dest.send('New poll:');
+    dest.send('New poll:\n ' + name + ':');
     
 };
 
