@@ -89,20 +89,20 @@ class Poll {
 
     }
 
-    // addMessage(message, emoji){
+    addMessage(message, emoji){
+        
+        // ➕
 
-    //     const messageId = message.id;
-
-    //     this.messages.push({messageId : messageId, emoji : emoji, userStorage : []});
+        this.messages.push({message : message, emoji : emoji, userStorage : []});
     
-    // }
-
-    addMessage(message){
-        this.messages.push(message);
     }
 
     getMessages(){
         return this.messages;
+    }
+
+    emptyMessages(){
+        this.messages = [];
     }
 
     getName(){

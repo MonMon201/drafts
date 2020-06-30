@@ -7,10 +7,13 @@ const { pingPong } = require("./fn/pingPong");
 const { writeCheckStorage } = require('./fn/checkStorageWrite.js');
 const { readCheckStorage } = require('./fn/checkStorageRead.js');
 const { startCollect, stopCollect, showCollected } = require('./fn/collector.js');
+const { printer } = require('./fn/printer.js');
+
+const emojiDistributor = Distributor.create(printer);
 
 const collectorDistributor = Distributor.create(
     (channel) => {
-        channel.getCurrentPoll().addMessage(channel.getMessage().content);
+        channel.getCurrentPoll().addMessage(channel.getMessage().content, '➕');
         console.log('message has been collected!');
     })
     .add('stop', stopCollect);
@@ -29,7 +32,8 @@ const defaultDistributor = Distributor.create((channel) => {
     .add('show', showCollected);
 
 const mainDistributor = MainDistributor.create(defaultDistributor)
-    .add('collectorFlag', collectorDistributor);
+    .add('collectorFlag', collectorDistributor)
+    .add('emojiFlag', emojiDistributor);
 
 const channelDistributor = new ChannelDistributor(mainDistributor);
 

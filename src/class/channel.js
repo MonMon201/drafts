@@ -3,13 +3,28 @@
 const { Poll } = require("./poll");
 
 class Channel{
-    constructor(id, lastMessage, client){
-        this.id = id;
-        this.lastMessage = lastMessage;
-        this.polls = [];
-        this.storedFlags = [];
-        this.checkStorage = null;
+    constructor(client, lastMessage){
         this.client = client;
+        this.lastMessage = lastMessage;
+        this.request = {
+            command : null,
+            args : [],
+        };
+        this.storedFlags = [];
+        this.polls = [];
+        this.checkStorage = null;
+    }
+
+    static create(client, lastMessage){
+        let msg = lastMessage.content.split(' ');
+        const args = [];
+        if(msg[0] === 'Polly'){
+            const command = msg[1];
+            for(let i = 2; i < msg.length; i++){
+                args.push(msg[i]);
+            }
+        }
+        return new Channel(client, lastMessage);
     }
 
     addFlag(key, value){   //key is a flag name, value is a state of the flag
@@ -37,7 +52,7 @@ class Channel{
     }
 
     getId(){
-        return this.id;
+        return this.lastMessage.channel.id;
     }
 
     setMessage(message){

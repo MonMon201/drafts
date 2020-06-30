@@ -14,8 +14,9 @@ client.on('ready', () => {
 // let msg = null;
 
 client.on('message', (message) => {
-    channelDistributor.controller(message);
-    // handler(message, client);
+    // console.log(client);
+    // channelDistributor.controller(message);
+    handler(client, message);
     // if(message.content === 'explore'){
     //     console.log(msg.channel.id + '\n' + msg.guild.id);
     //     const channelID = msg.channel.id;

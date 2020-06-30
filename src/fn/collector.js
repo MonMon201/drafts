@@ -8,20 +8,22 @@ const startCollect = (channel) => {
     channel.setFlag('collectorFlag', true);
     // console.log(channel.getFlags());
     // console.log('collector flag is set up!');
-    console.log(channel.getCurrentPoll());
+    // console.log(channel.getCurrentPoll());
 };
 
 const stopCollect = (channel) => {
     channel.setFlag('collectorFlag', false);
-    console.log('collector flag is set down!');
+    // console.log('collector flag is set down!');
 };
 
 const showCollected = (channel) => {
-    const messages = channel.getCurrentPoll().getMessages();
+    
+    channel.setFlag('emojiFlag', true);
+
     const dest = channel.getClient().channels.cache.get(channel.getId());
-    for(let i = 0; i < messages.length; i++){
-        dest.send(messages[i]);
-    }
+
+    dest.send('New poll:');
+    
 };
 
 module.exports = {

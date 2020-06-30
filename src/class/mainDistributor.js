@@ -21,11 +21,12 @@ class MainDistributor{
   
     controller(channel){
         const storedFlags = channel.getFlags();
+        // console.log(channel.getCurrentPoll());
         for(let i = 0; i < storedFlags.length; i++){
-            if(storedFlags[i].value){
+            if(storedFlags[i].value === true){
                 // if some flag is up this will happen
-                for(let i = 0; i < this.distributors.length; i++){
-                    if(this.distributors[i].key===storedFlags[i].key){
+                for(let j = 0; j < this.distributors.length; j++){
+                    if(this.distributors[j].key===storedFlags[i].key){
                         return this.distributors[i].value.controller(channel);
                     }
                 }
