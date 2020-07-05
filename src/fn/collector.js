@@ -23,14 +23,24 @@ const stopCollect = (channel) => {
 };
 
 const showCollected = (channel) => {
-    
-    const name = channel.getCurrentPoll().getName();
 
-    channel.setFlag('emojiFlag', true);
+    const currentPoll = channel.getCurrentPoll();
 
     const dest = channel.getClient().channels.cache.get(channel.getId());
 
-    dest.send('New poll:\n ' + name + ':');
+    if(currentPoll && currentPoll.getUserMessages().length > 0){
+    
+        const name = currentPoll.getName();
+    
+        channel.setFlag('emojiFlag', true);
+    
+        dest.send('New poll:\n ' + name + ':');
+
+    } else {
+
+        dest.send('No options in poll, sorry :(');
+
+    }
     
 };
 
