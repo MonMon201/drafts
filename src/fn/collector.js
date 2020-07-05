@@ -3,7 +3,7 @@
 const { Poll } = require('../class/poll');
 
 const startCollect = (channel) => {
-    console.log(channel.getPolls());
+    // console.log(channel.getPolls());
     const argument = channel.getRequest().args[0];
     if(argument){
         const poll = new Poll(argument);

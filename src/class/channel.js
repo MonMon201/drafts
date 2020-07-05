@@ -13,6 +13,7 @@ class Channel{
         this.storedFlags = [];
         this.polls = [];
         this.checkStorage = null;
+        this.lastReactions = null;    //both messages and users in { messageReaction: messageReaction, user : user, }
     }
 
     static create(client, lastMessage){
@@ -69,9 +70,11 @@ class Channel{
         this.request = {
             command : null,
             args : [],
+            call : null,
         }
         // Check if someone is asking Polly about something
-        if(unWorkedRequest[0] === 'Polly'){
+        this.request.call = unWorkedRequest[0]
+        if(this.request.call === 'Polly'){
             this.request.command = unWorkedRequest[1];
             for(let i = 2; i < unWorkedRequest.length; i++){
                 this.request.args.push(unWorkedRequest[i]);
@@ -97,6 +100,14 @@ class Channel{
 
     getClient(){
         return this.client;
+    }
+
+    setReaction(messageReaction, user){
+        this.lastReactions = {messageReaction, user};
+    }
+
+    getReaction(){
+        return this.lastReactions;
     }
 }
 

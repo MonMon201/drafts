@@ -3,51 +3,77 @@
 class Poll {
     constructor(name){
         this.name = name;
-        this.messages = [];
-        this.userMessages = [];
+        this.messages = [];     // {message, emoji, [user tags]}
+        this.userMessages = []; // [messages' content];
+        this.multiVote = [];   // {reactionMessage, user}
+        this.messageControl = false // message control for printer function
+        // reactionMessage needed to identify which message was multivoted, so we can
+        // add feature, when if person removes his first vote, we make the last standing one the first one
     }
 
-    addReaction(messageReaction, user){
+    addReaction(channel){
+        const reaction = channel.getReaction();
+        const messageReaction = reaction.messageReaction;
+        const user = reaction.user;
+
+        let idx = true;
 
         for(let i = 0; i < this.messages.length; i++){
-            const emoji = messageReaction._emoji.name;
-            const messageId = messageReaction.message.id;
-            // console.log('there is reaction in: ' + messageReaction.message.content);
-            const tag = user.tag;
-            // console.log(tag);
-            if(this.messages[i].emoji === emoji){
-                // Check if emoji is correct
-                console.log(
-                    '______________________' +
-                    '\nuser storage state on: ' +  
-                    '\n message: ' + messageReaction.message.content +
-                    '\n user: ' + tag +
-                    '\n message container: ' + this.messages[i].messageId +
-                    '\n state: ' + this.messages[i].userStorage
-                );
+            for(let j = 0; j < this.messages[i].userStorage.length; j++){
+                // Check if user voted for some option already.
+                if(this.messages[i].userStorage[j] === user.tag){
+                    // We need idx to check the whole array
+                    // If we use 'else', we won't check the whole array
+                    idx = false;
 
-                let idx = false;
+                    // this.multiVote.push(messageReaction, user);
+                    // multivote feat will be in process after main features will be done
 
-                for(let j = 0; j < this.messages.length; j++){
-                    if(!this.messages[j].userStorage.indexOf(tag)){
-                        idx = true;
-                    }
+                    console.log(
+                        user.tag + ' multi voted!' +
+                        '\non message: ' + messageReaction.message
+                    );
                 }
-
-                if(!idx){
-                    
-                    // Check if there is a user in storage
-
-                    if(this.messages[i].messageId === messageId){
-                        // Check if this message is handled
-                        this.messages[i].userStorage.push(tag);
-                        console.log(
-                        '\n______________________' +    
-                        '\nreaction added' + 
-                        '\n message: ' + messageReaction.message.content +
-                        '\n user: ' + tag
+            }
+        }
+        
+        if(idx){
+            // If this is the first vote of user - adding him to this.messsages, to mark the vote.
+            for(let i = 0; i < this.messages.length; i++){
+                if(this.messages[i].message.id === messageReaction.message.id){
+                    this.messages[i].userStorage.push(user.tag);
+                    console.log(
+                        '_____________' +
+                        '\nnew reaction!' +
+                        '\non message ' + messageReaction.message.content +
+                        '\nby user ' + user.tag
                         );
+                }
+            }
+        }
+    }
+
+    removeReaction(channel){
+        const reaction = channel.getReaction();
+        const messageReaction = reaction.messageReaction;
+        const user = reaction.user;
+
+        for(let i = 0; i < this.messages.length; i++){
+            // Check which messages' reaction was removed
+            if(this.messages[i].message.id === messageReaction.message.id){
+
+            for(let j = 0; j < this.messages[i].userStorage.length; j++){
+                // Check if user voted for some option already.
+                if(this.messages[i].userStorage[j] === user.tag){        
                         
+                        this.messages[i].userStorage.splice(j, 1); 
+
+                        console.log(
+                            '_____________' +
+                            '\nremoved reaction!' +
+                            '\non message ' + messageReaction.message.content +
+                            '\nby user ' + user.tag
+                            );
                     }
                 }
             }
@@ -55,37 +81,34 @@ class Poll {
 
     }
 
-    removeReaction(messageReaction, user){
-        for(let i = 0; i < this.messages.length; i++){
-            const emoji = messageReaction._emoji.name;
-            const messageId = messageReaction.message.id;
-            const tag = user.tag;
-            if(this.messages[i].emoji === emoji){
-                // Check if emoji is correct
-                if(this.messages[i].messageId === messageId){
-                    // Check if this message is 
-
-                    let idx = false;
-
-                    for(let j = 0; j < this.messages.length; j++){
-                        if(!this.messages[j].userStorage.indexOf(tag)){
-                            idx = true;
-                        }
-                    }
-                    
-
-                        if(idx){
-                            this.messages[idx].userStorage.splice(idx, 1);
-                            console.log(
-                            '\n________________________' +
-                            '\nreaction removed' + 
-                            '\n message: ' + messageReaction.message.content +
-                            '\n user: ' + tag
-                            );
-                        }
-                    
-                }
+    solution(channel){
+        const amounts = [];
+        const messages = channel.getCurrentPoll().getMessages();
+        // console.log(messages);
+        for(let i = 0; i < messages.length; i++){
+            amounts.push({ key : i, value : messages[i].userStorage.length})
+        }
+        amounts.sort((a, b) => b.value -  a.value);
+        
+        let biggest = [];
+        // biggest numbers now are at the beginning of an array, so
+        // we can collect equal biggest numbers to an array, and then
+        // random an answer
+        // console.log(amounts);
+        for(let i = 0; i < amounts.length; i++){
+            if(amounts[0].value === amounts[i].value){
+                biggest.push(amounts[i].key);
             }
+        }
+        // console.log(biggest);
+        if(biggest.length > 1){
+            const idx = Math.floor(Math.random() + (biggest.length-1)); 
+            console.log(idx);
+            // getting a random integer from 0 to biggest.length
+            // console.log(messages[idx]);
+            return messages[biggest[idx]].message.content;
+        } else{
+            return messages[biggest[0]].message.content;
         }
 
     }
@@ -99,7 +122,9 @@ class Poll {
     }
 
     getMessages(){
+
         return this.messages;
+
     }
 
     addUserMessage(message){
@@ -115,11 +140,23 @@ class Poll {
     }
 
     emptyMessages(){
+
         this.messages = [];
+
     }
 
     getName(){
+
         return this.name;
+
+    }
+
+    getMessageControl(){
+        return this.messageControl;
+    }
+    
+    setMessageControl(value){
+        this.messageControl = value;
     }
 
 }

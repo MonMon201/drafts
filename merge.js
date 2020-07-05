@@ -3,7 +3,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const { handler } = require('./src/handler.js');
 const { channelDistributor } = require('./src/mainDistributor.js');
-
+// TOKEN IS POLLY NOW
 const client = new Discord.Client();
 
 client.on('ready', () => {
@@ -14,6 +14,16 @@ client.on('ready', () => {
 // let msg = null;
 
 client.on('message', (message) => {
+    console.log(
+        '_____________' +
+        '\nNew Message:' +
+        '\nAuthor: ' + message.author.tag +
+        '\nContent: ' + message.content +
+        '\nGuild: ' + message.guild.name +
+        '\nChannel: ' + message.channel.name +
+        '\n_____________'
+    );
+    // console.log(message.author.tag);
     // console.log(client);
     channelDistributor.controller(message);
     // handler(client, message);
@@ -31,6 +41,23 @@ client.on('message', (message) => {
     //     );
     //     msg = message;
     // }
+});
+
+client.on('messageReactionAdd', (messageReaction, user) => {
+    if(user.tag !== 'Polly#6467'){
+        channelDistributor.emojiInController(messageReaction, user);
+    }
+    // incomingReaction(messageReaction, user);
+    // console.log(messageReaction);
+});
+
+client.on('messageReactionRemove', (messageReaction, user) => {
+    if(user.tag !== 'Polly#6467'){
+        channelDistributor.emojiOutController(messageReaction, user);
+    }
+    // console.log(messageReaction.message);
+    // outgoingReaction(messageReaction, user);
+    // console.log(messageReaction.users);
 });
 
 client.login(process.env.TOKEN);

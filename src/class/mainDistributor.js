@@ -35,10 +35,6 @@ class MainDistributor{
         }
         return this.defaultDistrubutor.controller(channel);
     }
-
-    emojiController(channel){
-        const storedFlags = channel.getFlags();
-    }
 }
 
 module.exports = {

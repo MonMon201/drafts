@@ -2,27 +2,30 @@
 
 const printer = async channel => {
 
-    const message = await channel.getMessage();
+    const message = channel.getMessage();
 
-    if(message.author.username === 'Danias-Test-Bot'){
+    const dest = await channel.getClient().channels.cache.get(channel.getId());
+    
+    const userMessages = channel.getCurrentPoll().getUserMessages();
 
-        const userMessages = channel.getCurrentPoll().getUserMessages();
-        // console.log(userMessages);
-        if(userMessages.length === 0){
-            channel.getMessage().react('➕');
-            channel.setFlag('emojiFlag', false);
-            channel.getCurrentPoll().addMessage(message, '➕');
-            // console.log(channel.getCurrentPoll().getMessages());
-            return;
-        }
-    
-        const dest = channel.getClient().channels.cache.get(channel.getId());
-    
-        await dest.send(userMessages.shift());
-    
-        await channel.getMessage().react('➕');
+    if(channel.getCurrentPoll().getMessageControl()){
+            if(userMessages.length === 0){
+                message.react('➕');
+                channel.setFlag('emojiFlag', false);
+                await channel.getCurrentPoll().addMessage(message, '➕');
+                // console.log(channel.getCurrentPoll().getMessages());
+                return;
+            } else if(message.author.username === 'Polly'){
+                await message.react('➕');
+                await dest.send(userMessages.shift());
+                channel.getCurrentPoll().addMessage(message, '➕');
+            } 
+    } else{
         
-    };
+        channel.getCurrentPoll().setMessageControl(true);
+
+        dest.send(userMessages.shift());
+    }
     
 }
 
