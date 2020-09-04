@@ -1,9 +1,7 @@
 'use strict';
 require('dotenv').config();
 const Discord = require('discord.js');
-const { handler } = require('./src/handler.js');
 const { channelDistributor } = require('./src/mainDistributor.js');
-// TOKEN IS POLLY NOW
 const client = new Discord.Client();
 
 client.on('ready', () => {
@@ -14,9 +12,22 @@ client.on('ready', () => {
 // let msg = null;
 
 client.on('message', (message) => {
+
+    // Message log
+    console.log(
+        '_____________' +
+        '\nNew Message:' +
+        '\nAuthor: ' + message.author.tag +
+        '\nContent: ' + message.content +
+        '\nGuild: ' + message.guild.name +
+        '\nChannel: ' + message.channel.name +
+        '\n_____________'
+    );
+
+    channelDistributor.controller(message);
+
     // console.log(message.author.tag);
     // console.log(client);
-    channelDistributor.controller(message);
     // handler(client, message);
     // if(message.content === 'explore'){
     //     console.log(msg.channel.id + '\n' + msg.guild.id);
