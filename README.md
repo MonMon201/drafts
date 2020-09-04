@@ -2,9 +2,16 @@
 
 ## Contains:
 
-* Async Queueu Draft
-* Discord Reaction Collector
-* Discord Channel getter for sending messages
-* Discord Message Mirror
-* Discord Message wrapper to wrap message with data
-* Discord Mirror Message Collector to collect and mirror bunch of messages
+### Polly  
+
+Poll bot for discord
+
+#### Set up:
+
+1. `npm i`
+
+2. Create dotenv file (.env), make input  
+`TOKEN=%BOT_TOKEN%`
+
+3. Launch:  
+`node index.js`
