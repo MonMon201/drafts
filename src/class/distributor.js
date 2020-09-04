@@ -10,7 +10,7 @@ class Distributor{
     }
   
     add(key, value){
-        this.storedFn.push({key : key, value : value});
+        this.storedFn.push({key, value});
         return this;
     }
   

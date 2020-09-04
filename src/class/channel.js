@@ -1,7 +1,5 @@
 'use strict';
 
-const { Poll } = require("./poll");
-
 class Channel{
     constructor(client, lastMessage, request){
         this.client = client;

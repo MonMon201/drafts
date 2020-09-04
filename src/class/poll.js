@@ -90,7 +90,7 @@ class Poll {
         }
         amounts.sort((a, b) => b.value -  a.value);
         
-        let biggest = [];
+        const biggest = [];
         // biggest numbers now are at the beginning of an array, so
         // we can collect equal biggest numbers to an array, and then
         // random an answer
@@ -117,7 +117,7 @@ class Poll {
         
         // ➕
 
-        this.messages.push({message : message, emoji : emoji, userStorage : []});
+        this.messages.push({message, emoji, userStorage : []});
     
     }
 

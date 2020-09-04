@@ -14,15 +14,6 @@ client.on('ready', () => {
 // let msg = null;
 
 client.on('message', (message) => {
-    console.log(
-        '_____________' +
-        '\nNew Message:' +
-        '\nAuthor: ' + message.author.tag +
-        '\nContent: ' + message.content +
-        '\nGuild: ' + message.guild.name +
-        '\nChannel: ' + message.channel.name +
-        '\n_____________'
-    );
     // console.log(message.author.tag);
     // console.log(client);
     channelDistributor.controller(message);
