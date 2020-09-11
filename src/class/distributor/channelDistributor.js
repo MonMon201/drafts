@@ -1,6 +1,6 @@
 'use strict';
 
-const { Channel } = require("./channel.js");
+const { Channel } = require("../single/channel.js");
 
 class ChannelDistributor{
     constructor(mainDistributor, reactionDistributor){
@@ -61,8 +61,9 @@ class ChannelDistributor{
                 let poll = this.channels[i].getCurrentPoll();
                 //Getting poll to check if there is some
                 if(poll){
-                    poll = poll.getMessages();
-                    for(let j = 0; j < wrappedMessages.length; j++){
+                    const userMessages = poll.getMessages();
+                    console.log(userMessages)
+                    for(let j = 0; j < userMessages.length; j++){
                         //Check if there is a message in the current poll handled
                         // if(user.tag === 'monmon213#7037'){
                         //     // console.log('here!');  
@@ -71,7 +72,7 @@ class ChannelDistributor{
                         //     console.log(wrappedMessages);
                         // }
                         
-                        if(message.id === wrappedMessages[j].message.id){  
+                        if(message.id === userMessages[j].message.id){
                             this.channels[i].setReaction(messageReaction, user);
                             this.reactionDistributor.incomingReaction(this.channels[i]);
                         }
@@ -103,8 +104,8 @@ class ChannelDistributor{
                 let poll = this.channels[i].getCurrentPoll();
                 //Getting poll to check if there is some
                 if(poll){
-                    poll = poll.getMessages();
-                    for(let j = 0; j < wrappedMessages.length; j++){
+                    const userMessages = poll.getMessages();
+                    for(let j = 0; j < userMessages.length; j++){
                         //Check if there is a message in the current poll handled
                         // if(user.tag === 'monmon213#7037'){
                         //     // console.log('here!');  
@@ -113,7 +114,7 @@ class ChannelDistributor{
                         //     console.log(wrappedMessages);
                         // }
                         
-                        if(message.id === wrappedMessages[j].message.id){
+                        if(message.id === userMessages[j].message.id){
                             this.channels[i].setReaction(messageReaction, user);  
                             this.reactionDistributor.outgoingReaction(this.channels[i]);
                         }

@@ -1,23 +1,22 @@
 'use strict';
 
-const { ChannelDistributor } = require('./class/channelDistributor.js');
-const { MainDistributor } = require("./class/mainDistributor");
-const { Distributor } = require("./class/distributor");
-const { ReactionDistributor } = require('./class/emojiDistributor');
-const { pingPong } = require("./fn/pingPong");
-const { writeCheckStorage } = require('./fn/checkStorageWrite.js');
-const { readCheckStorage } = require('./fn/checkStorageRead.js');
-const { startCollect, stopCollect, showCollected } = require('./fn/collector.js');
-const { printer } = require('./fn/printer.js');
-const { amazing } = require('./fn/thisIsAmazing.js');
-const { solution } = require('./fn/solution.js');
-
-const emojiDistributor = Distributor.create(printer);
+const { ChannelDistributor } = require('./class/distributor/channelDistributor.js');
+const { MainDistributor } = require("./class/distributor/mainDistributor");
+const { Distributor } = require("./class/distributor/distributor");
+const { ReactionDistributor } = require('./class/distributor/emojiDistributor');
+const { pingPong } = require("./fn/single/pingPong");
+const { writeCheckStorage } = require('./fn/storage/checkStorageWrite.js');
+const { readCheckStorage } = require('./fn/storage/checkStorageRead.js');
+const { startCollect } = require('./fn/collector/startCollect.js');
+const { stopCollect } = require('./fn/collector/stopCollect.js');
+const { showCollected } = require('./fn/collector/showCollected.js');
+const { amazing } = require('./fn/single/thisIsAmazing.js');
+const { solution } = require('./fn/single/solution.js');
 
 const collectorDistributor = Distributor.create(
     (channel) => {
         channel.getCurrentPoll().addUserMessage(channel.getMessage().content);
-        // console.log('message has been collected!');
+        console.log('message has been collected!');
     })
     .add('endNewPoll', stopCollect);
 
@@ -38,8 +37,7 @@ const defaultDistributor = Distributor.create((channel) => {
     .add('solution', solution);
 
 const mainDistributor = MainDistributor.create(defaultDistributor)
-    .add('collectorFlag', collectorDistributor)
-    .add('emojiFlag', emojiDistributor);
+    .add('collectorFlag', collectorDistributor);
     
 const reactionDistributor = new ReactionDistributor();
 

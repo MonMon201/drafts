@@ -1,4 +1,5 @@
 'use strict';
+
 require('dotenv').config();
 const Discord = require('discord.js');
 const { channelDistributor } = require('./src/mainDistributor.js');
@@ -57,7 +58,6 @@ client.on('messageReactionRemove', (messageReaction, user) => {
     if(user.tag !== 'Polly#6467'){
         channelDistributor.emojiOutController(messageReaction, user);
     }
-    // console.log(messageReaction.message);
     // outgoingReaction(messageReaction, user);
     // console.log(messageReaction.users);
 });
