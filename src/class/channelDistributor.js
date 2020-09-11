@@ -58,20 +58,23 @@ class ChannelDistributor{
         for(let i = 0; i < this.channels.length; i++){
             if(message.channel.id === this.channels[i].getId()){
                 //Check what channel handles this message
-                const wrappedMessages = this.channels[i].getCurrentPoll().getMessages();
-                //Messages are wrapped with additional data
-                for(let j = 0; j < wrappedMessages.length; j++){
-                    //Check if there is a message in the current poll handled
-                    // if(user.tag === 'monmon213#7037'){
-                    //     // console.log('here!');  
-                    //     console.log(message.id); 
-                    //     console.log(wrappedMessages[j].message.id);
-                    //     console.log(wrappedMessages);
-                    // }
-                    
-                    if(message.id === wrappedMessages[j].message.id){  
-                        this.channels[i].setReaction(messageReaction, user);
-                        this.reactionDistributor.incomingReaction(this.channels[i]);
+                let poll = this.channels[i].getCurrentPoll();
+                //Getting poll to check if there is some
+                if(poll){
+                    poll = poll.getMessages();
+                    for(let j = 0; j < wrappedMessages.length; j++){
+                        //Check if there is a message in the current poll handled
+                        // if(user.tag === 'monmon213#7037'){
+                        //     // console.log('here!');  
+                        //     console.log(message.id); 
+                        //     console.log(wrappedMessages[j].message.id);
+                        //     console.log(wrappedMessages);
+                        // }
+                        
+                        if(message.id === wrappedMessages[j].message.id){  
+                            this.channels[i].setReaction(messageReaction, user);
+                            this.reactionDistributor.incomingReaction(this.channels[i]);
+                        }
                     }
                 }
             }
@@ -97,20 +100,23 @@ class ChannelDistributor{
         for(let i = 0; i < this.channels.length; i++){
             if(message.channel.id === this.channels[i].getId()){
                 //Check what channel handles this message
-                const wrappedMessages = this.channels[i].getCurrentPoll().getMessages();
-                //Messages are wrapped with additional data
-                for(let j = 0; j < wrappedMessages.length; j++){
-                    //Check if there is a message in the current poll handled
-                    // if(user.tag === 'monmon213#7037'){
-                    //     // console.log('here!');  
-                    //     console.log(message.id); 
-                    //     console.log(wrappedMessages[j].message.id);
-                    //     console.log(wrappedMessages);
-                    // }
-                    
-                    if(message.id === wrappedMessages[j].message.id){
-                        this.channels[i].setReaction(messageReaction, user);  
-                        this.reactionDistributor.outgoingReaction(this.channels[i]);
+                let poll = this.channels[i].getCurrentPoll();
+                //Getting poll to check if there is some
+                if(poll){
+                    poll = poll.getMessages();
+                    for(let j = 0; j < wrappedMessages.length; j++){
+                        //Check if there is a message in the current poll handled
+                        // if(user.tag === 'monmon213#7037'){
+                        //     // console.log('here!');  
+                        //     console.log(message.id); 
+                        //     console.log(wrappedMessages[j].message.id);
+                        //     console.log(wrappedMessages);
+                        // }
+                        
+                        if(message.id === wrappedMessages[j].message.id){
+                            this.channels[i].setReaction(messageReaction, user);  
+                            this.reactionDistributor.outgoingReaction(this.channels[i]);
+                        }
                     }
                 }
             }
