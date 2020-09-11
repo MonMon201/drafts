@@ -1,2 +1,0 @@
-- feat: add discord.js, dotenv modules
-- docs: update README
