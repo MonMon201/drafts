@@ -1,4 +1,5 @@
 'use strict';
+
 const incomingReaction = (messageReaction, user) => {
     console.log('incoming reaction!' + 
     '\n Username: ' + user.tag + 

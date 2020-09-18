@@ -8,7 +8,6 @@ class ChannelDistributor{
         this.mainDistributor = mainDistributor;
         this.reactionDistributor = reactionDistributor;
         this.client = null;
-        this.tmp = null;
     }
 
     setClient(client){
