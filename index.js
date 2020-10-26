@@ -26,40 +26,18 @@ client.on('message', message => {
   );
 
   channelDistributor.controller(message);
-
-  // console.log(message.author.tag);
-  // console.log(client);
-  // handler(client, message);
-  // if(message.content === 'explore'){
-  //     console.log(msg.channel.id + '\n' + msg.guild.id);
-  //     const channelID = msg.channel.id;
-  //     const channel = client.channels.cache.get(channelID);
-  //     const content = 'new message!\n from:\n channel name: ' + msg.channel.name +
-  //     '\n channel id: ' + msg.channel.id;
-  //     channel.send(content);
-  // } else{
-  //     console.log('new message!' +
-  //     '\n message content: ' + message.content +
-  //     '\n author: ' + message.author.username
-  //     );
-  //     msg = message;
-  // }
 });
 
 client.on('messageReactionAdd', (messageReaction, user) => {
   if (user.tag !== 'Polly#6467') {
     channelDistributor.emojiInController(messageReaction, user);
   }
-  // incomingReaction(messageReaction, user);
-  // console.log(messageReaction);
 });
 
 client.on('messageReactionRemove', (messageReaction, user) => {
   if (user.tag !== 'Polly#6467') {
     channelDistributor.emojiOutController(messageReaction, user);
   }
-  // outgoingReaction(messageReaction, user);
-  // console.log(messageReaction.users);
 });
 
 client.login(process.env.TOKEN);
