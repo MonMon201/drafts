@@ -40,20 +40,6 @@ class ChannelDistributor{
     
     emojiInController(messageReaction, user){
         const message = messageReaction.message;
-        // this.tmp = message;
-        // if(user.tag === 'monmon213#7037'){
-        //     if(this.tmp.channel.id === message.channel.id){
-        //         console.log('________________________');
-        //         console.log('Messages are equal!');
-        //         console.log('________________________');
-        //     } else{
-        //         console.log('________________________');
-        //         console.log('Messages are not equal!');
-        //         // console.log(this.tmp.id);
-        //         // console.log(message.id);
-        //         console.log('________________________');
-        //     }
-        // }
         for(let i = 0; i < this.channels.length; i++){
             if(message.channel.id === this.channels[i].getId()){
                 //Check what channel handles this message
@@ -64,12 +50,6 @@ class ChannelDistributor{
                     console.log(userMessages)
                     for(let j = 0; j < userMessages.length; j++){
                         //Check if there is a message in the current poll handled
-                        // if(user.tag === 'monmon213#7037'){
-                        //     // console.log('here!');  
-                        //     console.log(message.id); 
-                        //     console.log(wrappedMessages[j].message.id);
-                        //     console.log(wrappedMessages);
-                        // }
                         
                         if(message.id === userMessages[j].message.id){
                             this.channels[i].setReaction(messageReaction, user);
