@@ -13,7 +13,6 @@ const { solution } = require('./fn/single/solution.js');
 const collectorDistributor = Distributor.create(
     (channel) => {
         channel.getCurrentPoll().addUserMessage(channel.getMessage().content);
-        console.log('message has been collected!');
     })
     .add('endNewPoll', stopCollect);
 
