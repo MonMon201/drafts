@@ -7,10 +7,8 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
   channelDistributor.setClient(client);
-  console.log('ready!');
+  console.log('Bot has been started');
 });
-
-// let msg = null;
 
 client.on('message', message => {
 
@@ -29,13 +27,13 @@ client.on('message', message => {
 });
 
 client.on('messageReactionAdd', (messageReaction, user) => {
-  if (user.tag !== 'Polly#6467') {
+  if (user.tag !== process.env.TAG) {
     channelDistributor.emojiInController(messageReaction, user);
   }
 });
 
 client.on('messageReactionRemove', (messageReaction, user) => {
-  if (user.tag !== 'Polly#6467') {
+  if (user.tag !== process.env.TAG) {
     channelDistributor.emojiOutController(messageReaction, user);
   }
 });

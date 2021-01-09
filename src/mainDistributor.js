@@ -5,12 +5,9 @@ const { MainDistributor } = require("./class/distributor/mainDistributor");
 const { Distributor } = require("./class/distributor/distributor");
 const { ReactionDistributor } = require('./class/distributor/emojiDistributor');
 const { pingPong } = require("./fn/single/pingPong");
-const { writeCheckStorage } = require('./fn/storage/checkStorageWrite.js');
-const { readCheckStorage } = require('./fn/storage/checkStorageRead.js');
 const { startCollect } = require('./fn/collector/startCollect.js');
 const { stopCollect } = require('./fn/collector/stopCollect.js');
 const { showCollected } = require('./fn/collector/showCollected.js');
-const { amazing } = require('./fn/single/thisIsAmazing.js');
 const { solution } = require('./fn/single/solution.js');
 
 const collectorDistributor = Distributor.create(
@@ -29,11 +26,8 @@ const defaultDistributor = Distributor.create((channel) => {
     }
 })
     .add('ping', pingPong)
-    .add('write', writeCheckStorage)
-    .add('read', readCheckStorage)
     .add('startNewPoll', startCollect)
     .add('showNewPoll', showCollected)
-    .add('this_is_amazing!', amazing)
     .add('solution', solution);
 
 const mainDistributor = MainDistributor.create(defaultDistributor)
